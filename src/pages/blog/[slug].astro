@@ -1,0 +1,36 @@
+---
+import Layout from '../../layouts/Layout.astro'; // Zorg dat dit pad klopt met jouw projectstructuur
+import { fetchEntries } from '../../lib/contentful';
+
+export async function getStaticPaths() {
+  const entries = await fetchEntries('blogPost'); // Zorg dat dit het juiste contentmodel is
+
+  return entries.map((entry) => ({
+    params: { slug: entry.fields.slug }, // Zorg ervoor dat "slug" hier beschikbaar is
+  }));
+}
+
+
+// Haal de slug uit de URL
+const slug = Astro.params.slug;
+const entries = await fetchEntries('blogPost');
+const post = entries.find((entry) => entry.fields.slug === slug);
+
+if (!post) {
+  throw new Error('Post not found');
+}
+
+// Destructureer de velden voor gebruik in de template
+const { gastspreker, titel, datum, tekst } = post.fields;
+---
+
+<Layout>
+  <article>
+    <h1>{titel}</h1>
+    <h3>Gastspreker: {gastspreker}</h3>
+    <p>Datum: {datum}</p>
+    <section>
+      <p>{tekst}</p>
+    </section>
+  </article>
+</Layout>

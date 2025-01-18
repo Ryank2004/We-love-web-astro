@@ -1,0 +1,102 @@
+---
+const { gastspreker, titel, datum, slug, kleur } = Astro.props.data;
+---
+
+<li class="card">
+    <a href={`/blog/${slug}`} class="card-link">
+        <div class="card-color" style={`background-color: ${kleur};`}></div>
+        <h3>{gastspreker}</h3>
+        <h2>{titel}</h2>
+        <p>Datum: <span>{datum}</span></p>
+    </a>
+</li>
+
+<style>
+    .card {
+        flex-basis: 100%;
+        background-color: #121212;
+        border-radius: 28px;
+        margin: 0 15px 30px;
+        overflow: hidden;
+    }
+
+    .card-link {
+        display: block;
+        position: relative;
+        text-decoration: none;
+        cursor: pointer;
+        color: inherit;
+        padding: 22px 40px;
+    }
+
+    .card-color {
+        width: 128px;
+        height: 128px;
+        z-index: 1;
+        position: absolute;
+        top: -75px;
+        right: -75px;
+        border-radius: 50%;
+        -webkit-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }
+
+    .card-link:hover .card-color {
+        transform: scale(10);
+    }
+
+    h2 {
+        font-size: 24px;
+        min-height: 72px;
+        z-index: 2;
+        position: relative;
+    }
+
+    h3 {
+        font-size: 16px;
+        padding-bottom: 5px;
+        z-index: 2;
+        position: relative;
+    }
+
+    p {
+        font-size: 16px;
+        font-weight: bold;
+        z-index: 2;
+        position: relative;
+        font-weight: 600;
+    }
+
+    p span {
+        color: #f9b234;
+        -webkit-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }
+
+    .card-link:hover p span {
+        color: #fff;
+    }
+
+    @media screen and (min-width: 600px) {
+        .card {
+            flex-basis: calc(50% - 30px);
+        }
+    }
+
+    @media screen and (min-width: 1080px) {
+        .card {
+            flex-basis: calc(33.33333% - 30px);
+        }
+
+        .card-link {
+            padding: 1.5rem 1.5rem;
+        }
+
+        h2 {
+            min-height: 87px;
+            font-size: 30px;
+        }
+    }
+</style>

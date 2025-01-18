@@ -1,11 +1,51 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import { Card } from "../components";
+import { fetchEntries } from '../lib/contentful';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const cardsData = await fetchEntries('blogPost');
+
+console.log('Fetched entries:', cardsData);
 ---
 
 <Layout>
-	<Welcome />
+	<section class="card-overview">
+		<h1>WE LOVE WEB</h1>
+		<ul class="card-container">
+			{cardsData.length > 0 ? (
+				cardsData.map((post) => (
+					<Card key={post.sys.id} data={post.fields} />
+				))
+			) : (
+				<p>Geen content beschikbaar.</p>
+			)}
+		</ul>
+	</section>
 </Layout>
+
+<style>
+	h1 {
+		font-size: 40px;
+		text-align: center;
+		padding: 30px 0;
+	}
+
+	.card-container {
+		display: flex;
+		align-items: start;
+		flex-wrap: wrap;
+		padding: 0 0 30px 0;
+	}
+
+	@media screen and (min-width: 640px) {
+		.card-container {
+			margin: 0px 15px;
+		}
+	}
+
+	@media screen and (min-width: 1300px) {
+		.card-container {
+			margin: 0 120px;
+		}
+	}
+</style>
