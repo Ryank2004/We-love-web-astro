@@ -14,7 +14,7 @@
     src: url(../fonts/Inter/Inter-VariableFont_opsz\,wght.ttf) format("truetype");
 }
 
-body {
+html, body {
     background-color: black;
     color: white;
 }

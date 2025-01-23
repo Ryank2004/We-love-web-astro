@@ -7,7 +7,10 @@ const client = createClient({
 
 export async function fetchEntries(contentType) {
   try {
-    const entries = await client.getEntries({ content_type: contentType });
+    const entries = await client.getEntries({ 
+      content_type: 'blogPost',
+      order: '-fields.order',
+    });
     return entries.items;
   } catch (error) {
     console.error('Error fetching entries:', error);
